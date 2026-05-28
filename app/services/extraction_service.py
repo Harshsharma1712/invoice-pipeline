@@ -18,6 +18,8 @@ def process_invoice(image_path: str):
         raw_response
     )
 
+    # print("Structured Data:", structured_data)
+
     # calculate invoice totals and generate invoice number
     final_invoice = calculate_invoice(structured_data)
     

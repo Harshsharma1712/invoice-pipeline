@@ -1,7 +1,10 @@
 from uuid import uuid4
 
 
-TAX_PERCENTAGE = 5
+DISCOUNT_PERCENTAGE = 4.76
+
+CGST_PERCENTAGE = 2.5
+SGST_PERCENTAGE = 2.5
 
 
 def generate_invoice_number():
@@ -50,10 +53,10 @@ def calculate_invoice(data: dict):
             "quantity_unit"
         )
 
-        # Calculate item amount
+        # Item total
         item_total = quantity * rate
 
-        # Count totals by unit
+        # Count quantity totals
         if quantity_unit == "BOX":
             total_boxes += quantity
 
@@ -72,11 +75,37 @@ def calculate_invoice(data: dict):
             )
         })
 
-    tax_amount = (
-        subtotal * TAX_PERCENTAGE
+    # -----------------------------
+    # Discount Calculation
+    # -----------------------------
+
+    discount_amount = (
+        subtotal * DISCOUNT_PERCENTAGE
     ) / 100
 
-    grand_total = subtotal + tax_amount
+    total = subtotal - discount_amount
+
+    # -----------------------------
+    # GST Calculation
+    # -----------------------------
+
+    cgst_amount = (
+        total * CGST_PERCENTAGE
+    ) / 100
+
+    sgst_amount = (
+        total * SGST_PERCENTAGE
+    ) / 100
+
+    # -----------------------------
+    # Grand Total
+    # -----------------------------
+
+    grand_total = (
+        total +
+        cgst_amount +
+        sgst_amount
+    )
 
     final_invoice = {
 
@@ -97,10 +126,29 @@ def calculate_invoice(data: dict):
             2
         ),
 
-        "tax_percentage": TAX_PERCENTAGE,
+        "discount_percentage": DISCOUNT_PERCENTAGE,
 
-        "tax_amount": round(
-            tax_amount,
+        "discount_amount": round(
+            discount_amount,
+            2
+        ),
+
+        "total": round(
+            total,
+            2
+        ),
+
+        "cgst_percentage": CGST_PERCENTAGE,
+
+        "cgst_amount": round(
+            cgst_amount,
+            2
+        ),
+
+        "sgst_percentage": SGST_PERCENTAGE,
+
+        "sgst_amount": round(
+            sgst_amount,
             2
         ),
 

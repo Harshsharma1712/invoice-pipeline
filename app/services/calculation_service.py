@@ -9,22 +9,68 @@ def generate_invoice_number():
     return f"INV-{uuid4().hex[:8].upper()}"
 
 
+def safe_float(value):
+
+    try:
+        return float(value)
+    except:
+        return 0.0
+
+
+def safe_int(value):
+
+    try:
+        return int(value)
+    except:
+        return 0
+
+
 def calculate_invoice(data: dict):
 
     items = data.get("items", [])
 
-    total_boxes = 0
     subtotal = 0
+
+    total_boxes = 0
+    total_pcs = 0
+
+    calculated_items = []
 
     for item in items:
 
-        total_boxes += float(
-            item.get("box_pcs", 0)
+        quantity = safe_int(
+            item.get("quantity")
         )
 
-        subtotal += float(
-            item.get("vatable_amount", 0)
+        rate = safe_float(
+            item.get("rate")
         )
+
+        quantity_unit = item.get(
+            "quantity_unit"
+        )
+
+        # Calculate item amount
+        item_total = quantity * rate
+
+        # Count totals by unit
+        if quantity_unit == "BOX":
+            total_boxes += quantity
+
+        elif quantity_unit == "PCS":
+            total_pcs += quantity
+
+        subtotal += item_total
+
+        calculated_items.append({
+
+            **item,
+
+            "item_total": round(
+                item_total,
+                2
+            )
+        })
 
     tax_amount = (
         subtotal * TAX_PERCENTAGE
@@ -33,17 +79,35 @@ def calculate_invoice(data: dict):
     grand_total = subtotal + tax_amount
 
     final_invoice = {
-        **data,
 
         "invoice_number": generate_invoice_number(),
 
-        "total_boxes": round(total_boxes, 2),
+        "customer_name": data.get(
+            "customer_name"
+        ),
 
-        "subtotal": round(subtotal, 2),
+        "items": calculated_items,
 
-        "tax_amount": round(tax_amount, 2),
+        "total_boxes": total_boxes,
 
-        "grand_total": round(grand_total, 2)
+        "total_pcs": total_pcs,
+
+        "subtotal": round(
+            subtotal,
+            2
+        ),
+
+        "tax_percentage": TAX_PERCENTAGE,
+
+        "tax_amount": round(
+            tax_amount,
+            2
+        ),
+
+        "grand_total": round(
+            grand_total,
+            2
+        )
     }
 
     return final_invoice

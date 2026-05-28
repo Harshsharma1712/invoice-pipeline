@@ -1,67 +1,93 @@
 import json
 
-from app.utils.json_cleaner import (
-    clean_json_response
-)
+from app.utils.json_cleaner import clean_json_response
 
 
 def clean_invoice_data(raw_text: str):
 
-    cleaned_text = clean_json_response(
-        raw_text
-    )
+    cleaned_text = clean_json_response(raw_text)
 
     data = json.loads(cleaned_text)
 
     def to_float(value):
 
+        if value is None:
+            return None
+
         try:
-            return float(value)
+            return float(str(value).replace(",", "").strip())
         except:
-            return 0.0
+            return None
+
+    def to_int(value):
+
+        if value is None:
+            return None
+
+        try:
+            return int(float(str(value).strip()))
+        except:
+            return None
+
+    def clean_text(value):
+
+        if value is None:
+            return None
+
+        text = str(value).strip()
+
+        return text if text else None
 
     cleaned_items = []
 
     for item in data.get("items", []):
 
+        quantity_unit = clean_text(
+            item.get("quantity_unit")
+        )
+
+        # Normalize quantity unit
+        if quantity_unit:
+            quantity_unit = quantity_unit.upper()
+
+            if quantity_unit in ["BOX", "BOXES"]:
+                quantity_unit = "BOX"
+
+            elif quantity_unit in ["PCS", "PIECES", "PIECE"]:
+                quantity_unit = "PCS"
+
+            else:
+                quantity_unit = None
+
         cleaned_items.append({
 
-            "particulars": str(
-                item.get("particulars", "")
-            ).strip(),
-
-            "size": (
-                str(item.get("size")).strip()
-                if item.get("size")
-                else None
+            "particulars": clean_text(
+                item.get("particulars")
             ),
 
-            "hsn_code": (
-                str(item.get("hsn_code")).strip()
-                if item.get("hsn_code")
-                else None
+            "size": clean_text(
+                item.get("size")
             ),
 
-            "box_pcs": to_float(
-                item.get("box_pcs")
+            "hsn_code": clean_text(
+                item.get("hsn_code")
             ),
+
+            "quantity": to_int(
+                item.get("quantity")
+            ),
+
+            "quantity_unit": quantity_unit,
 
             "rate": to_float(
                 item.get("rate")
-            ),
-
-            "vatable_amount": to_float(
-                item.get("vatable_amount")
             )
         })
 
     return {
-        "customer_name": data.get(
-            "customer_name"
-        ),
 
-        "invoice_name": data.get(
-            "invoice_name"
+        "customer_name": clean_text(
+            data.get("customer_name")
         ),
 
         "items": cleaned_items

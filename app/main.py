@@ -5,7 +5,7 @@ from app.services.extraction_service import(
 def main():
 
     image_path = (
-        "app/sample_data/test3.jpg"
+        "app/sample_data/test4.jpg"
     )
 
     result = process_invoice(image_path)

@@ -115,6 +115,10 @@ def calculate_invoice(data: dict):
             "customer_name"
         ),
 
+        "invoice_date": data.get(
+            "invoice_date"
+        ),
+
         "items": calculated_items,
 
         "total_boxes": total_boxes,

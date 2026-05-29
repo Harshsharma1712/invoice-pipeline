@@ -4,6 +4,7 @@ You are a highly accurate handwritten sales record extraction system.
 Your task is to extract ONLY the visible handwritten data from the provided sales page image.
 
 The page contains:
+- Invoice Date at the top right corner
 - Customer name at the top
 - Multiple handwritten sales item rows
 
@@ -22,6 +23,7 @@ Return ONLY valid JSON.
 
 {
   "customer_name": "",
+  "invoice_date": "",
   "items": [
     {
       "particulars": "",
@@ -37,6 +39,16 @@ Return ONLY valid JSON.
 --------------------------------------------------
 FIELD RULES
 --------------------------------------------------
+
+invoice_date:
+- Extract handwritten invoice date from top right corner.
+- Preserve exactly as written.
+- Examples:
+  - 12/04/2025
+  - 12-04-2025
+  - 12.04.25
+- Do not reformat date.
+- If not visible return null.
 
 customer_name:
 - Extract the handwritten customer name from the top of the page.

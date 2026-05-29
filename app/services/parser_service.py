@@ -90,5 +90,9 @@ def clean_invoice_data(raw_text: str):
             data.get("customer_name")
         ),
 
+        "invoice_date": clean_text(
+        data.get("invoice_date")
+        ),
+
         "items": cleaned_items
     }

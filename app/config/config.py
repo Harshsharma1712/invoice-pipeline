@@ -13,5 +13,7 @@ class Settings:
 
     DEBUG = True
 
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
 
 settings = Settings()

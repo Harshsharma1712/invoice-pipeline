@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy import Date
 
 from app.database.db import Base
 
@@ -11,7 +12,7 @@ class Information(Base):
     id = Column(Integer, primary_key=True)
     invoice_number = Column(String, unique=True, nullable=False)
     customer_name = Column(String, nullable=False)
-    invoice_date = Column(String)
+    invoice_date = Column(Date, nullable=False)
     total_boxes = Column(Integer)
     total_pcs = Column(Integer)
     subtotal = Column(Float)

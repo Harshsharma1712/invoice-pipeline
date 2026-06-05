@@ -3,6 +3,9 @@ from app.models import (
     Information,
     InformationItem
 )
+from app.utils.date_parser import (
+    parse_invoice_date
+)
 
 def save_information(data: dict):
 
@@ -19,8 +22,8 @@ def save_information(data: dict):
                 "customer_name"
             ),
 
-            invoice_date=data.get(
-                "invoice_date"
+            invoice_date=parse_invoice_date(
+                data.get("invoice_date")
             ),
 
             total_boxes=data.get(

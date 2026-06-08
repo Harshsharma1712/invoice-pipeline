@@ -13,6 +13,9 @@ from app.services.pdf_invoice_service import (
     generate_invoice_pdf
 )
 
+def generate_invoice_from_object(invoice):
+    return generate_invoice_pdf(invoice)
+
 
 def generate_invoice(
     invoice_number: str

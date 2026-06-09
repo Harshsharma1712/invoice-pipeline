@@ -24,6 +24,9 @@ class Information(Base):
     sgst_percentage = Column(Float)
     sgst_amount = Column(Float)
     grand_total = Column(Float)
+
+    pdf_url = Column(String)
+    pdf_storage_path = Column(String)
     
     created_at = Column(
         DateTime, 

@@ -37,9 +37,10 @@ def upload_invoice_pdf(
         storage_path,
         3600
     )
-)
+)   
+    print(signed_url)
 
     return {
         "storage_path": storage_path,
-        "url": signed_url
+        "url": signed_url["signedURL"]
     }

@@ -40,3 +40,28 @@ def get_invoices_by_date(
         )
         .all()
     )
+
+
+from sqlalchemy import select
+
+from app.models.information import Information
+from app.database.db import SessionLocal
+
+def get_invoice_by_id(
+    invoice_id: int
+):
+
+    session = SessionLocal()
+
+    try:
+
+        return session.scalar(
+            select(Information)
+            .where(
+                Information.id == invoice_id
+            )
+        )
+
+    finally:
+        session.close()
+

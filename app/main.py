@@ -18,6 +18,14 @@ from app.services.invoice_update_service import (
     save_pdf_metadata
 )
 
+from app.services.invoice_query_service import (
+    get_invoice_by_id
+)
+
+from app.services.email_trigger_service import (
+    trigger_daily_invoice_email
+)
+
 def main():
 
     image_path = (
@@ -53,6 +61,19 @@ def main():
         upload_result["url"],
         upload_result["storage_path"]
     )
+
+    # invoice = get_invoice_by_id(
+    #     invoice.id
+    # )
+
+    # trigger_daily_invoice_email(
+    #     invoice
+    # )
+
+    # print(
+    #     "Daily sales email sent."
+    # )
+
 
 if __name__ == "__main__":
     main()

@@ -19,5 +19,12 @@ class Settings:
 
     SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
+    RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+
+    EMAIL_FROM = os.getenv(
+        "EMAIL_FROM",
+        "onboarding@resend.dev"
+    )
+
 
 settings = Settings()

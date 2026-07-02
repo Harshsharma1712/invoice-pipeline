@@ -62,17 +62,17 @@ def main():
         upload_result["storage_path"]
     )
 
-    # invoice = get_invoice_by_id(
-    #     invoice.id
-    # )
+    invoice = get_invoice_by_id(
+        invoice.id
+    )
 
-    # trigger_daily_invoice_email(
-    #     invoice
-    # )
+    trigger_daily_invoice_email(
+        invoice
+    )
 
-    # print(
-    #     "Daily sales email sent."
-    # )
+    print(
+        "Daily sales email sent."
+    )
 
 
 if __name__ == "__main__":

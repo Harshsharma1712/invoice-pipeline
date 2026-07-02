@@ -41,7 +41,7 @@ def upload_invoice_pdf(
 
     return {
         "storage_path": storage_path,
-        "url": signed_url
+        "url": signed_url["signedURL"]
     }
 
 
@@ -50,7 +50,7 @@ def download_invoice_pdf(
 ):
     response = (
         supabase.storage
-        .from_("invoice-bucket")
+        .from_("invoices")
         .download(storage_path)
     )
 

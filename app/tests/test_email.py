@@ -14,7 +14,7 @@ from app.services.email_service import (
 
 
 TEST_EMAILS = [
-    "your-email@gmail.com"
+    "sharmahs017@gmail.com"
 ]
 
 

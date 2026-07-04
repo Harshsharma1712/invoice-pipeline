@@ -6,10 +6,14 @@ from app.models import (
 from app.utils.date_parser import (
     parse_invoice_date
 )
+from sqlalchemy.orm import Session
 
-def save_information(data: dict):
+def save_information(
+        data: dict,
+        db: Session
+    ):
 
-    db = SessionLocal()
+    # db = SessionLocal()
 
     try:
         invoice = Information(
@@ -123,6 +127,6 @@ def save_information(data: dict):
 
         raise e
 
-    finally:
+    # finally:
 
-        db.close()
+    #     db.close()

@@ -13,14 +13,17 @@ from app.services.pdf_invoice_service import (
     generate_invoice_pdf
 )
 
+from sqlalchemy.orm import Session
+
 def generate_invoice_from_object(invoice):
     return generate_invoice_pdf(invoice)
 
 
 def generate_invoice(
-    invoice_number: str
+    invoice_number: str,
+    db: Session
 ):
-    db = SessionLocal()
+    # db = SessionLocal()
 
     try:
 
@@ -38,16 +41,22 @@ def generate_invoice(
         return generate_invoice_pdf(
             invoice
         )
+    
+    except Exception as e:
+        # db.rollback()
 
-    finally:
+        raise e
 
-        db.close()
+    # finally:
+
+    #     db.close()
 
 
 def generate_daily_invoices(
-    invoice_date: date
+    invoice_date: date,
+    db: Session
 ):
-    db = SessionLocal()
+    # db = SessionLocal()
 
     try:
 
@@ -71,7 +80,12 @@ def generate_daily_invoices(
             )
 
         return pdf_files
+    
+    except Exception as e:
+        # db.rollback()
 
-    finally:
+        raise e
 
-        db.close()
+    # finally:
+
+    #     db.close()

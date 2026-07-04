@@ -6,13 +6,16 @@ from app.models import (
     Information
 )
 
+from sqlalchemy.orm import Session
+
 def save_pdf_metadata(
     invoice_id: int,
-    pdf_url: str,
-    storage_path: str
+    # pdf_url: str,
+    storage_path: str,
+    db: Session
 ):
 
-    db = SessionLocal()
+    # db = SessionLocal()
 
     try:
 
@@ -26,14 +29,17 @@ def save_pdf_metadata(
             .first()
         )
 
-        invoice.pdf_url = pdf_url
+        # invoice.pdf_url = pdf_url
 
         invoice.pdf_storage_path = (
             storage_path
         )
 
         db.commit()
+    
+    except Exception as e:
+        raise e
 
-    finally:
+    # finally:
 
-        db.close()
+    #     db.close()

@@ -26,7 +26,11 @@ from app.services.email_trigger_service import (
     trigger_daily_invoice_email
 )
 
+from app.database.db import SessionLocal
+
 def main():
+
+    db = SessionLocal()
 
     image_path = (
         "app/sample_data/test4.jpg"
@@ -37,13 +41,14 @@ def main():
     print(result)
 
     # save into database
-    invoice = save_information(result)
+    invoice = save_information(result, db)
 
     print("Information saved in db.")
 
     # pdf_path = generate_invoice_from_object(invoice)
     pdf_path = generate_invoice(
-        invoice.invoice_number
+        invoice.invoice_number,
+        db
     )
 
     print(
@@ -58,16 +63,20 @@ def main():
     # save pdf url and pdf storage path in information model
     save_pdf_metadata(
         invoice.id,
-        upload_result["url"],
-        upload_result["storage_path"]
+        # upload_result["url"],
+        upload_result["storage_path"],
+        db
     )
+    
 
     invoice = get_invoice_by_id(
-        invoice.id
+        invoice.id,
+        db
     )
 
     trigger_daily_invoice_email(
-        invoice
+        invoice,
+        db
     )
 
     print(

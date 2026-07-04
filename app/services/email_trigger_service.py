@@ -10,12 +10,14 @@ from app.services.generated_invoice_storage import (
     download_invoice_pdf
 )
 
+from sqlalchemy.orm import Session
 
 def trigger_daily_invoice_email(
-    invoice
+    invoice,
+    db: Session
 ):
 
-    recipients = get_active_emails()
+    recipients = get_active_emails(db)
 
     if not recipients:
         return

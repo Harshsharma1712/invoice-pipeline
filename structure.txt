@@ -1,0 +1,60 @@
+.
+├── alembic
+│   ├── env.py
+│   ├── README
+│   ├── script.py.mako
+│   └── versions
+│       └── 40d08db51d54_create_users_table.py
+├── alembic.ini
+├── app
+│   ├── config
+│   │   ├── config.py
+│   │   └── constants.py
+│   ├── database
+│   │   └── db.py
+│   ├── generated_invoices
+│   │   ├── INV-028F62DD.pdf
+│   │   ├── INV-703C5097.pdf
+│   │   └── INV-9509DB06.pdf
+│   ├── main.py
+│   ├── models
+│   │   ├── information_items.py
+│   │   ├── information.py
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── prompts
+│   │   └── invoice_prompt.py
+│   ├── sample_data
+│   │   ├── test3.jpg
+│   │   └── test4.jpg
+│   ├── schemas
+│   │   ├── information_items.py
+│   │   ├── information.py
+│   │   ├── __init__.py
+│   │   └── invoice_schema.py
+│   ├── services
+│   │   ├── calculation_service.py
+│   │   ├── email_service.py
+│   │   ├── email_trigger_service.py
+│   │   ├── extraction_service.py
+│   │   ├── gemini_service.py
+│   │   ├── generated_invoice_storage.py
+│   │   ├── information_storage_service.py
+│   │   ├── invoice_generation_service.py
+│   │   ├── invoice_pipeline_service.py
+│   │   ├── invoice_query_service.py
+│   │   ├── invoice_update_service.py
+│   │   ├── parser_service.py
+│   │   ├── pdf_invoice_service.py
+│   │   └── user_query_service.py
+│   ├── tests
+│   │   ├── generate_invoice.py
+│   │   ├── test_email.py
+│   │   └── test_pdf_upload.py
+│   └── utils
+│       ├── date_parser.py
+│       └── json_cleaner.py
+├── requirements.txt
+└── structure.txt
+
+14 directories, 44 files

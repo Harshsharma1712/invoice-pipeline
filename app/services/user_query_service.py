@@ -3,14 +3,18 @@ from sqlalchemy import select
 from app.database.db import SessionLocal
 from app.models.user import User
 
+from sqlalchemy.orm import Session
 
-def get_active_emails() -> list[str]:
 
-    session = SessionLocal()
+def get_active_emails(
+        db: Session
+) -> list[str]:
+
+    # session = SessionLocal()
 
     try:
 
-        users = session.scalars(
+        users = db.scalars(
             select(User)
             .where(User.active == True)
         ).all()
@@ -19,6 +23,9 @@ def get_active_emails() -> list[str]:
             user.email
             for user in users
         ]
+    
+    except Exception as e:
+        raise e
 
-    finally:
-        session.close()
+    # finally:
+    #     db.close()

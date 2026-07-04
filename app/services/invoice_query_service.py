@@ -48,20 +48,24 @@ from app.models.information import Information
 from app.database.db import SessionLocal
 
 def get_invoice_by_id(
-    invoice_id: int
+    invoice_id: int,
+    db: Session
 ):
 
-    session = SessionLocal()
+    # session = SessionLocal()
 
     try:
 
-        return session.scalar(
+        return db.scalar(
             select(Information)
             .where(
                 Information.id == invoice_id
             )
         )
+    
+    except Exception as e:
+        raise e
 
-    finally:
-        session.close()
+    # finally:
+    #     db.close()
 

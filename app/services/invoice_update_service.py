@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 def save_pdf_metadata(
     invoice_id: int,
-    pdf_url: str,
+    # pdf_url: str,
     storage_path: str,
     db: Session
 ):
@@ -29,7 +29,7 @@ def save_pdf_metadata(
             .first()
         )
 
-        invoice.pdf_url = pdf_url
+        # invoice.pdf_url = pdf_url
 
         invoice.pdf_storage_path = (
             storage_path

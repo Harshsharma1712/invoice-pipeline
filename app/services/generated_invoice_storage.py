@@ -30,20 +30,38 @@ def upload_invoice_pdf(
         }
     )
 
-    signed_url = (
-    supabase.storage
-    .from_("invoices")
-    .create_signed_url(
-        storage_path,
-        3600
-    )
-)   
-    print(signed_url)
+#     signed_url = (
+#     supabase.storage
+#     .from_("invoices")
+#     .create_signed_url(
+#         storage_path,
+#         3600
+#     )
+# )   
+    # print(signed_url)
 
     return {
         "storage_path": storage_path,
-        "url": signed_url["signedURL"]
+        # "url": signed_url["signedURL"]
     }
+
+def get_invoice_signed_url(
+    storage_path: str,
+    expires_in: int = 3600,
+) -> str:
+    
+    print(storage_path)
+
+    response = (
+        supabase.storage
+        .from_("invoices")
+        .create_signed_url(
+            storage_path,
+            expires_in,
+        )
+    )
+
+    return response["signedURL"]
 
 
 def download_invoice_pdf(

@@ -63,10 +63,11 @@ def main():
     # save pdf url and pdf storage path in information model
     save_pdf_metadata(
         invoice.id,
-        upload_result["url"],
+        # upload_result["url"],
         upload_result["storage_path"],
         db
     )
+    
 
     invoice = get_invoice_by_id(
         invoice.id,
